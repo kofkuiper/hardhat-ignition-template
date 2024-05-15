@@ -1,13 +1,31 @@
-# Sample Hardhat Project
+# Hardhat Ignition Template
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+Hardhat ignition template with custom The number of confirmations Hardhat Ignition waits before considering a transaction as complete
 
-Try running some of the following tasks:
+* **Issue**
+`You have sent transactions from 0x... and they interfere with Hardhat Ignition. Please wait until they get 5 confirmations before running Hardhat Ignition again.`
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.ts
+* **My solution** is set `requiredConfirmations` to `1` (cannot be less than 1)
+```ts
+const config: HardhatUserConfig = {
+  solidity: ...,
+
+  ignition: {
+    requiredConfirmations: 1
+  },
+};
 ```
+
+More info about [Ignition configuration](https://github.com/NomicFoundation/hardhat/blob/main/docs/src/content/ignition/docs/config/index.md)
+
+----
+
+If you want to deploy contract without previous execution stored in `.\ignition\deployments...` You can customize the deployment folder name by providing an explicit deployment ID with `--deployment-id <id>`
+
+example
+
+```
+npx hardhat ignition deploy ./ignition/modules/Lock.ts  --deployment-id "eth-1-prod"
+```
+
+More info about [Deployment guide](https://github.com/NomicFoundation/hardhat/blob/main/docs/src/content/ignition/docs/guides/deploy.md)
